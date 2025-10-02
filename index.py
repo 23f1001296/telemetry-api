@@ -4,11 +4,11 @@ import numpy as np
 
 app = FastAPI()
 
-# Allow all origins, all headers, POST method
+# Enable CORS for all origins
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],   # allow requests from any domain
-    allow_methods=["POST"], 
+    allow_origins=["*"],   # allow requests from any origin
+    allow_methods=["POST", "OPTIONS"],  # allow POST and preflight
     allow_headers=["*"]
 )
 
@@ -18,7 +18,7 @@ async def latency_metrics(req: Request):
     regions = body.get("regions", [])
     threshold = body.get("threshold_ms", 180)
 
-    # Dummy telemetry data for testing
+    # Example telemetry data
     dummy_data = {
         "amer": [100, 150, 200, 180],
         "emea": [120, 140, 190, 170]
